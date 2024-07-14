@@ -8,10 +8,19 @@ User = get_user_model()
 
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'user_type']
+
+
 
 class JobSeekerSerializer(serializers.ModelSerializer):
     # StringRelatedField for nested serializers
-    user = serializers.StringRelatedField(many=False)
+    # user = serializers.StringRelatedField(many=False)
+
+    # to view the user account details too
+    user = UserSerializer()
 
     class Meta:
         model = Job_seeker
