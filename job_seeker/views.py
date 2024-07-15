@@ -136,4 +136,5 @@ class JobSeekerLoginAPIView(APIView):
 class JobSeekerLogoutAPIView(APIView):
     def get(self, request):
         logout(request)
-        return redirect('job_seeker_login')
+        # return redirect('job_seeker_login')
+        return Response('Logout successful.')

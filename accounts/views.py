@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 from job_seeker.serializers import JobSeekerSerializer
 from employer.serializers import EmployerSerializer
@@ -13,7 +13,7 @@ User = get_user_model()
 
 # to get the user object data by an user_id
 class UserDetailView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, format=None):
         user_id = request.query_params.get('user_id')
