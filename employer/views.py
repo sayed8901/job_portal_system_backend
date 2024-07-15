@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Employer
-from .serializers import EmployerSerializer, EmployerRegistrationSerializer, EmployerLoginSerializer
+from .serializers import EmployerSerializer, EmployerRegistrationSerializer
 
 
 # necessary importing for confirmation link generating
@@ -19,8 +19,7 @@ from django.template.loader import render_to_string
 
 
 from accounts.models import CustomUser
-from django.contrib.auth import authenticate, login, logout
-from rest_framework.authtoken.models import Token
+
 
 
 
@@ -81,7 +80,6 @@ class EmployerRegistrationAPIView(APIView):
 
 
 
-
 # creating a function to decode the confirmation link for activating the user account
 def activate(request, user_id, token):
     try:
@@ -99,42 +97,3 @@ def activate(request, user_id, token):
         return redirect('employer_register')
 
 
-
-
-
-# creating views for login functionality
-class EmployerLoginAPIView(APIView):
-    serializer_class = EmployerLoginSerializer
-
-    def post(self, request):
-        serialized_data = self.serializer_class(data = request.data)
-
-        if serialized_data.is_valid():
-            username = serialized_data.validated_data['username']
-            password = serialized_data.validated_data['password']
-            user = authenticate(username = username, password = password)
-
-            if user:
-                # The method get_or_create returns a tuple containing two elements
-                token, _ = Token.objects.get_or_create(user = user)
-                print(token)    # getting token
-                print(_)    # indicates whether the token_object was created or not
-                login(request, user)
-                return Response({'token': token.key, 'user_id': user.id})
-            else:
-                return Response({'error': 'Invalid credential'})
-        
-        return Response(serialized_data.errors)
-
-
-
-
-
-
-
-# creating views for logout functionality
-class EmployerLogoutAPIView(APIView):
-    def get(self, request):
-        logout(request)
-        # return redirect('employer_login')
-        return Response('Logout successful.')

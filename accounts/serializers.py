@@ -25,3 +25,15 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.user_type = self.cleaned_data.get('user_type')
         user.save()
         return user
+
+
+
+
+
+
+
+# creating login serializer
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True, max_length=20)
+    password = serializers.CharField(required=True, max_length=20)
+

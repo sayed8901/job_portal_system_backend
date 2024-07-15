@@ -87,13 +87,3 @@ class EmployerRegistrationSerializer(serializers.ModelSerializer):
     
 
 
-
-
-# creating login serializer
-class EmployerLoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True, max_length=20)
-    password = serializers.CharField(required=True, max_length=20)
-
-
-
-

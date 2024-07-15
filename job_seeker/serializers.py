@@ -97,12 +97,3 @@ class JobSeekerRegistrationSerializer(serializers.ModelSerializer):
 
 
 
-
-# creating login serializer
-class JobSeekerLoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True, max_length=20)
-    password = serializers.CharField(required=True, max_length=20)
-
-
-
-
