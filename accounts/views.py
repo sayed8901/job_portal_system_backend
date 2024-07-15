@@ -7,7 +7,9 @@ from rest_framework.permissions import AllowAny
 
 from job_seeker.serializers import JobSeekerSerializer
 from employer.serializers import EmployerSerializer
-from .serializers import LoginSerializer
+
+from .serializers import LoginSerializer, UserAccountSerializer
+from .models import CustomUser
 
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
@@ -32,16 +34,10 @@ class UserDetailView(APIView):
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
         
-        # Depending on the user_type, use the corresponding serializer for getting the addition user data
-        if user.user_type == 'employer':
-            serializer = EmployerSerializer(user.employer)
-        elif user.user_type == 'job_seeker':
-            serializer = JobSeekerSerializer(user.job_seeker)
-        else:
-            return Response({'error': 'User type not supported for detailed view'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        print(serializer.data)
+        serializer = UserAccountSerializer(user)
+        print('user:', serializer.data)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

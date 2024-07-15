@@ -20,7 +20,7 @@ class JobSeekerSerializer(serializers.ModelSerializer):
     # user = serializers.StringRelatedField(many=False)
 
     # to view the user account details too
-    user = UserSerializer()
+    # user = UserSerializer()
 
     class Meta:
         model = Job_seeker
