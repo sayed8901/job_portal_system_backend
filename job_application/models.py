@@ -23,11 +23,6 @@ class JobApplication(models.Model):
     applied_on = models.DateField(auto_now_add=True)
 
 
-    # The unique_together attribute inside the Meta class ensures that each combination of job_seeker and job_post is unique. This means a job seeker can only apply to a particular job post once.
-    # class Meta:
-    #     unique_together = ('job_seeker', 'job_post')
-
-
 
     def __str__(self):
         return f'${self.job_seeker.user.username} applied to: ${self.job_post.job_title} on ${self.applied_on}.'
