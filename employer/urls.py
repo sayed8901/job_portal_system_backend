@@ -17,6 +17,6 @@ urlpatterns = [
     path('register/', EmployerRegistrationAPIView.as_view(), name='employer_register'),
     path('active/<user_id>/<token>/', activate, name='employer_account_activate'),
 
-    path('by_user_id/', EmployerDataByUserIDView.as_view(), name='job_seeker_by_user_id'),
+    path('by_user_id/', EmployerDataByUserIDView.as_view(), name='employer_by_user_id'),
 ]
 
