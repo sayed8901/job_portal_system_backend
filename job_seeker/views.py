@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 from .models import Job_seeker
 from .serializers import JobSeekerSerializer, JobSeekerRegistrationSerializer
@@ -10,6 +11,7 @@ from .serializers import JobSeekerSerializer, JobSeekerRegistrationSerializer
 
 # necessary importing for confirmation link generating
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode 
 from django.utils.encoding import force_bytes
 
@@ -19,6 +21,8 @@ from django.template.loader import render_to_string
 
 
 from accounts.models import CustomUser
+
+User = get_user_model()
 
 
 
@@ -96,4 +100,30 @@ def activate(request, user_id, token):
         # er age response ba kono error message die deowa jete pare
         return redirect('job_seeker_register')
 
+
+
+
+
+
+
+# to get the specific job_seeker object data by an user_id
+class JobSeekerDataByUserIDView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')
+        
+        if not user_id:
+            return Response({'error': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = Job_seeker.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        
+        serializer = JobSeekerSerializer(user)
+        print('user:', serializer.data)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 

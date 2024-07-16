@@ -5,11 +5,7 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
 
-from job_seeker.serializers import JobSeekerSerializer
-from employer.serializers import EmployerSerializer
-
 from .serializers import LoginSerializer, UserAccountSerializer
-from .models import CustomUser
 
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
@@ -68,8 +64,6 @@ class LoginAPIView(APIView):
                 return Response({'error': 'Invalid credential'})
         
         return Response(serialized_data.errors)
-
-
 
 
 

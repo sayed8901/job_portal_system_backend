@@ -11,7 +11,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'user_type']
+        fields = ['username', 'first_name', 'last_name', 'email', ]
 
 
 
@@ -25,6 +25,8 @@ class JobSeekerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job_seeker
         fields = '__all__'
+
+        read_only_fields = ['user_type',]
 
 
 
