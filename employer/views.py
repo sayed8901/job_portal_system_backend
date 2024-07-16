@@ -117,7 +117,7 @@ class EmployerDataByUserIDView(APIView):
             return Response({'error': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
-            user = Employer.objects.get(id=user_id)
+            user = Employer.objects.get(user=user_id)
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 

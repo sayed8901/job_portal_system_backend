@@ -117,7 +117,7 @@ class JobSeekerDataByUserIDView(APIView):
             return Response({'error': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
-            user = Job_seeker.objects.get(id=user_id)
+            user = Job_seeker.objects.get(user=user_id)
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
