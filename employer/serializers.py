@@ -19,12 +19,13 @@ class EmployerSerializer(serializers.ModelSerializer):
     # StringRelatedField for nested serializers
     # user = serializers.StringRelatedField(many=False)
 
-    # to view the user account details too
+    # to view the user account details too,     # but, it occurs error when in updating the full nested data object model.
     # user = UserSerializer()
 
     class Meta:
         model = Employer
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['user', ]
 
 
 
