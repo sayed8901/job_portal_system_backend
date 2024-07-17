@@ -73,7 +73,7 @@ class LoginAPIView(APIView):
 class LogoutAPIView(APIView):
     def get(self, request):
         logout(request)
-        # return redirect('employer_login')
+        # return redirect('user_login')
         return Response('Logout successful.')
 
 

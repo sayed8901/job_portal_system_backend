@@ -17,15 +17,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 class JobSeekerSerializer(serializers.ModelSerializer):
     # StringRelatedField for nested serializers
-    # user = serializers.StringRelatedField(many=False)
+    user = serializers.StringRelatedField(many=False)
 
     # to view the user account details too,     # but, it occurs error when in updating the full nested data object model.
     # user = UserSerializer()
 
     class Meta:
         model = Job_seeker
-        # fields = '__all__'
-        exclude = ['user', ]
+        fields = '__all__'
 
 
 
@@ -38,13 +37,13 @@ class JobSeekerRegistrationSerializer(serializers.ModelSerializer):
     sex = serializers.ChoiceField(choices=[('male', 'Male'), ('female', 'Female')])
     age = serializers.IntegerField(validators=[MinValueValidator(18)])
     education = serializers.CharField()
-    job_experience = serializers.CharField()
+    experience = serializers.CharField()
     confirm_password = serializers.CharField(max_length=20, required=True)
 
     class Meta:
         model = User
         fields = [
-            'username', 'first_name', 'last_name',  'fathers_name', 'mothers_name', 'address', 'contact_no', 'sex', 'age', 'education', 'job_experience', 'email', 'password', 'confirm_password'
+            'username', 'first_name', 'last_name',  'fathers_name', 'mothers_name', 'address', 'contact_no', 'sex', 'age', 'education', 'experience', 'email', 'password', 'confirm_password'
         ]
 
 
@@ -59,7 +58,7 @@ class JobSeekerRegistrationSerializer(serializers.ModelSerializer):
         sex = self.validated_data['sex']
         age = self.validated_data['age']
         education = self.validated_data['education']
-        job_experience = self.validated_data['job_experience']
+        experience = self.validated_data['experience']
 
         contact_no = self.validated_data['contact_no']
         email = self.validated_data['email']
@@ -87,7 +86,7 @@ class JobSeekerRegistrationSerializer(serializers.ModelSerializer):
         job_seeker_account = Job_seeker(
             user = account,
 
-            fathers_name = fathers_name, mothers_name = mothers_name, address = address, sex = sex, age = age, education = education, job_experience = job_experience, contact_no = contact_no
+            fathers_name = fathers_name, mothers_name = mothers_name, address = address, sex = sex, age = age, education = education, experience = experience, contact_no = contact_no
         )
 
         job_seeker_account.save()
