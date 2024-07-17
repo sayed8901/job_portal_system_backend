@@ -63,7 +63,7 @@ class LoginAPIView(APIView):
             else:
                 return Response({'error': 'Invalid credential'})
         
-        return Response(serialized_data.errors)
+        return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

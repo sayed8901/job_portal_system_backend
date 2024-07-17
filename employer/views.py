@@ -48,7 +48,6 @@ class EmployerRegistrationAPIView(APIView):
             print(user)
 
 
-
             # creating a token for the user
             token = default_token_generator.make_token(user)
             print('token :', token)
@@ -64,7 +63,7 @@ class EmployerRegistrationAPIView(APIView):
 
             # email sending implementation
             email_subject = 'Confirm Your Account'
-            email_body = render_to_string('confirm_email.html', {
+            email_body = render_to_string('employer_confirm_email.html', {
                 'user': user,
                 'confirm_link': confirm_link,
             })
@@ -74,10 +73,10 @@ class EmployerRegistrationAPIView(APIView):
             email.send()
 
 
-            return Response('Check your mail for confirmation.')
+            return Response({'message': 'Check your mail for confirmation.'}, status=status.HTTP_201_CREATED)
 
 
-        return Response(serialized_data.errors)
+        return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
