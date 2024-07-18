@@ -16,15 +16,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class EmployerSerializer(serializers.ModelSerializer):
-    # StringRelatedField for nested serializers
-    user = serializers.StringRelatedField(many=False)
+    # StringRelatedField for nested serializers, to only show the user name, not the whole user object data
+    # user = serializers.StringRelatedField(many=False)
 
-    # to view the user account details too,     # but, it occurs error when in updating the full nested data object model.
-    # user = UserSerializer()
+    # to view the user account details too
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Employer
         fields = '__all__'
+
 
 
 

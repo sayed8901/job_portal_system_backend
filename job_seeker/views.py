@@ -4,6 +4,8 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from job_seeker.permissions import IsJobSeekerOrReadOnly, IsJobSeekerUser
 
 from .models import Job_seeker
 from .serializers import JobSeekerSerializer, JobSeekerRegistrationSerializer
@@ -29,6 +31,8 @@ User = get_user_model()
 
 # Create your views here.
 class JobSeekerViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly, IsJobSeekerOrReadOnly]
+
     queryset = Job_seeker.objects.all()
     serializer_class = JobSeekerSerializer
 

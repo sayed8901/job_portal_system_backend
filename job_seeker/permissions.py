@@ -40,3 +40,5 @@ class IsJobSeekerUser(permissions.BasePermission):
             return False
 
 
+
+
