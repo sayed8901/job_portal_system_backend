@@ -12,10 +12,13 @@ class JobApplicationAdmin(admin.ModelAdmin):
     def position(self, obj):
         return obj.job_post.job_title
     
+    def employer(self, obj):
+        return obj.job_post.employer
+    
     def deadline(self, obj):
         return obj.job_post.deadline
     
-    list_display = ['id', 'first_name', 'last_name', 'position', 'applied_on', 'deadline', 'salary', 'resume']
+    list_display = ['id', 'first_name', 'last_name', 'position', 'employer', 'applied_on', 'deadline', 'salary', 'resume']
 
 
 admin.site.register(JobApplication, JobApplicationAdmin)

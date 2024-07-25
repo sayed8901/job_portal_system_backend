@@ -1,4 +1,6 @@
+from django.shortcuts import get_object_or_404
 from job_seeker.models import Job_seeker
+from employer.models import Employer
 from job_post.models import JobPost
 from job_application.models import JobApplication
 from job_application.serializers import JobApplicationSerializer
@@ -56,10 +58,11 @@ class JobApplicationApplyView(APIView):
 
         if serializer.is_valid():
             # Get the JobSeeker instance of the current user
-            job_seeker = Job_seeker.objects.get(user=request.user)
+            # job_seeker = Job_seeker.objects.get(user=request.user)
 
-            # getting the current_job_position_id
-            # job_post_id = request.data.get('job_post')
+            # Retrieve job_post ID from query parameters
+            job_seeker_id = request.query_params.get('job_seeker_id')
+            job_seeker = get_object_or_404(Job_seeker, id = job_seeker_id)
 
             # Retrieve job_post ID from query parameters
             job_post_id = request.query_params.get('job_post_id')  
@@ -184,15 +187,17 @@ class JobApplicationDetailView(APIView):
 
 
 
-# to get the job_posts filtered for a specific employer
+# to get the job_posts filtered for a specific job_seeker
 class JobApplicationForAJobSeekerAPIView(APIView):
     serializer_class = JobApplicationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsJobSeekerOrReadOnly, IsApplicantOrReadOnly]
 
 
-
     def get(self, request, format=None):
-        job_seeker = Job_seeker.objects.get(user=request.user)
+        # job_seeker = Job_seeker.objects.get(user=request.user)
+
+        job_seeker_id = request.query_params.get('job_seeker_id')
+        job_seeker = get_object_or_404(Job_seeker, id = job_seeker_id)
 
         applications = JobApplication.objects.filter(job_seeker=job_seeker)
         # creating serializer with application objects
@@ -208,17 +213,24 @@ class JobApplicationForAJobSeekerAPIView(APIView):
 # to get all the application for a specific job post
 class JobApplicationsForJobPostAPIView(APIView):
     serializer_class = JobApplicationSerializer
-    permission_classes = [IsAuthenticated, IsEmployerOrReadOnly]
+
+    # this permission works fine in DRF panel,
+    # but doesn't work in frontend by showing messages: "Authentication credentials were not provided"
+    # permission_classes = [IsAuthenticated, IsEmployerOrReadOnly]
+
 
     def get(self, request, format=None):
+        employer_id = request.query_params.get('employer_id')
+        employer = get_object_or_404(Employer, id = employer_id)
+
         job_post_id = request.query_params.get('job_post_id')
-        print(job_post_id)
+        print(employer_id, job_post_id)
 
         if not job_post_id:
             return Response({'error': 'Job post ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            job_post = JobPost.objects.get(id=job_post_id, employer=request.user.employer)
+            job_post = JobPost.objects.get(id=job_post_id, employer=employer)
         except JobPost.DoesNotExist:
             return Response({'error': 'Invalid job post ID or you are not authorized to view this job post'}, status=status.HTTP_400_BAD_REQUEST)
 

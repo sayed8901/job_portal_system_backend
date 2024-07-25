@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from job_post.models import JobPost
 from employer.models import Employer
 from category.models import Category
@@ -47,7 +48,11 @@ class JobPostPublishView(APIView):
 
         if serializer.is_valid():
             # Get the Employer instance of the current user
-            employer = Employer.objects.get(user=request.user)
+            # employer = Employer.objects.get(user=request.user)
+
+            employer_id = request.query_params.get('employer_id')
+            employer = get_object_or_404(Employer, id = employer_id)
+
             print('employer:', employer, 'user_type:', employer.user.user_type)
 
             serializer.save(employer=employer)
@@ -125,7 +130,10 @@ class JobPostForAnEmployerAPIView(APIView):
 
 
     def get(self, request, format=None):
-        employer = Employer.objects.get(user=request.user)
+        # employer = Employer.objects.get(user=request.user)
+
+        employer_id = request.query_params.get('employer_id')
+        employer = get_object_or_404(Employer, id = employer_id)
 
         advertisements = JobPost.objects.filter(employer=employer)
         # creating serializer with application objects

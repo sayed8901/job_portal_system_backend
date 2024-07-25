@@ -4,6 +4,8 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from employer.permissions import IsEmployerOrReadOnly, IsEmployerUser
 
 from .models import Employer
 from .serializers import EmployerSerializer, EmployerRegistrationSerializer
@@ -29,6 +31,8 @@ User = get_user_model()
 
 # Create your views here.
 class EmployerViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly, IsEmployerOrReadOnly]
+
     queryset = Employer.objects.all()
     serializer_class = EmployerSerializer
 
