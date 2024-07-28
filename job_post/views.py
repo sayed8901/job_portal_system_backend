@@ -95,6 +95,7 @@ class JobPostDetailView(APIView):
     # to update a post data
     def put(self, request, pk, format = None):
         print('inside put in post_detail')
+        # print('Received data:', request.data)
 
         post = self.get_object(pk)
 
@@ -105,6 +106,7 @@ class JobPostDetailView(APIView):
             serializer.save()
             return Response(serializer.data)
         
+        print('Validation errors:', serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 

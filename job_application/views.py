@@ -52,7 +52,7 @@ class JobApplicationApplyView(APIView):
     # to add a job application
     def post(self, request, format = None):
         print('applicationList  --->> inside POST ')
-        print(request.data)
+        print('Received data:', request.data)
 
         serializer = JobApplicationSerializer(data = request.data)
 
@@ -113,10 +113,39 @@ class JobApplicationApplyView(APIView):
             email.send()
 
 
+            print('Validation errors:', serializer.errors)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+
+
+# to check f the job_seeker is applied to a particular job post or not
+class CheckJobApplicationView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly, IsJobSeekerOrReadOnly, IsApplicantOrReadOnly]
+
+    def get(self, request, format = None):
+        # Retrieve job_post ID from query parameters
+            job_seeker_id = request.query_params.get('job_seeker_id')
+            job_seeker = get_object_or_404(Job_seeker, id = job_seeker_id)
+
+            # Retrieve job_post ID from query parameters
+            job_post_id = request.query_params.get('job_post_id')  
+
+            if not job_post_id:
+                return Response({'error': 'Job post ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            try:
+                # Fetch the job post object
+                job_post = JobPost.objects.get(id=job_post_id)
+            except JobPost.DoesNotExist:
+                return Response({'error': 'Invalid job post ID'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check if the job seeker has already applied for this job post
+            if JobApplication.objects.filter(job_seeker=job_seeker, job_post=job_post).exists():
+                return Response({'message': 'Already applied for this job post'})
+
 
 
 
@@ -151,6 +180,7 @@ class JobApplicationDetailView(APIView):
     # to update a post data
     def put(self, request, pk, format = None):
         print('inside PUT in application_detail')
+        # print('Received data:', request.data)
 
         application = self.get_object(pk)
 
@@ -164,6 +194,7 @@ class JobApplicationDetailView(APIView):
             serializer.save()
             return Response(serializer.data)
         
+        print('Validation errors:', serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
@@ -214,9 +245,7 @@ class JobApplicationForAJobSeekerAPIView(APIView):
 class JobApplicationsForJobPostAPIView(APIView):
     serializer_class = JobApplicationSerializer
 
-    # this permission works fine in DRF panel,
-    # but doesn't work in frontend by showing messages: "Authentication credentials were not provided"
-    # permission_classes = [IsAuthenticated, IsEmployerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsEmployerOrReadOnly]
 
 
     def get(self, request, format=None):

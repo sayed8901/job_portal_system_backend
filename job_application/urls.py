@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import JobApplicationListView, JobApplicationApplyView, JobApplicationDetailView, JobApplicationForAJobSeekerAPIView, JobApplicationsForJobPostAPIView
+from .views import JobApplicationListView, JobApplicationApplyView, JobApplicationDetailView, JobApplicationForAJobSeekerAPIView, JobApplicationsForJobPostAPIView, CheckJobApplicationView
 
 
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path("apply/", JobApplicationApplyView.as_view(), name="apply_application"),
 
     path('my_applications/', JobApplicationForAJobSeekerAPIView.as_view(), name='my_applications'),
+    path('check_application/', CheckJobApplicationView.as_view(), name='check_application'),
 
     path('applications_for_a_job_post/', JobApplicationsForJobPostAPIView.as_view(), name='applications_for_a_job_post'),
 ]

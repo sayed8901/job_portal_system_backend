@@ -4,6 +4,8 @@ from rest_framework import permissions
 # permission defined for job_seeker user
 class IsJobSeekerOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
+        print("User:", request.user)
+
         # all the viewer (if users are not authenticated) can view
         if request.method in permissions.SAFE_METHODS:
             return True
