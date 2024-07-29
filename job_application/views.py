@@ -69,6 +69,8 @@ class JobApplicationApplyView(APIView):
 
             if not job_post_id:
                 return Response({'error': 'Job post ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+            if not job_seeker_id:
+                return Response({'error': 'Job seeker ID is required'}, status=status.HTTP_400_BAD_REQUEST)
             
             try:
                 # Fetch the job post object
@@ -135,6 +137,8 @@ class CheckJobApplicationView(APIView):
 
             if not job_post_id:
                 return Response({'error': 'Job post ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+            if not job_seeker_id:
+                return Response({'error': 'Job seeker ID is required'}, status=status.HTTP_400_BAD_REQUEST)
             
             try:
                 # Fetch the job post object
@@ -145,6 +149,8 @@ class CheckJobApplicationView(APIView):
             # Check if the job seeker has already applied for this job post
             if JobApplication.objects.filter(job_seeker=job_seeker, job_post=job_post).exists():
                 return Response({'message': 'Already applied for this job post'})
+            else:
+                return Response({'message': 'Not applied for this job post'})
 
 
 
