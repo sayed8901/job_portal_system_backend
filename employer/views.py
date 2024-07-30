@@ -60,8 +60,11 @@ class EmployerRegistrationAPIView(APIView):
             user_id = urlsafe_base64_encode(force_bytes(user.pk))
             print('user_id :', user_id)
 
-            # creating a confirm link
-            confirm_link = f'http://127.0.0.1:8000/employer/active/{user_id}/{token}/'
+            # creating a confirm link (using local domain)
+            # confirm_link = f'http://127.0.0.1:8000/employer/active/{user_id}/{token}/'
+            
+            # creating a confirm link (using live DRF domain)
+            confirm_link = f'https://job-portal-system-backend.onrender.com/employer/active/{user_id}/{token}/'
             
 
 
