@@ -18,7 +18,7 @@ class JobPostSerializer(serializers.ModelSerializer):
     # to see the full details of employer
     employer = EmployerSerializer(read_only=True)
     
-    # job_category = serializers.StringRelatedField(many=False)
+    # job_category = serializers.StringRelatedField(many=True)
 
 
     class Meta:
