@@ -111,16 +111,14 @@ MIDDLEWARE = [
 
 # To trust and allow CSRF token on deployment, adding our domain to CSRF_TRUSTED_ORIGINS list
 CSRF_TRUSTED_ORIGINS = [
-    'https://job-portal-system-backend.onrender.com', # Adding OnRender site URL
+    'https://job-portal-system-backend.onrender.com',
     'http://127.0.0.1:8000',
     'http://localhost:8000',
-    'https://bd-job-portal.netlify.app', # Adding Netlify site URL
 ]
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    'http://localhost:8000',
-    'https://bd-job-portal.netlify.app', # Adding Netlify site URL
+    "http://localhost:3000",
+    "http://localhost:8000",
 )
 
 
