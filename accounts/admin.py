@@ -19,10 +19,7 @@ class CustomUserAdmin(admin.ModelAdmin):
         return obj.user.user_type
     
     def is_active(self, obj):
-        if obj.user.is_active == True:
-            return "Verified"
-        else: 
-            return "Disabled"
+        return obj.user.is_active
     
     list_display = ['id', 'username', 'first_name', 'last_name', 'email', 'user_type', 'is_active',]
 
