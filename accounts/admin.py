@@ -18,7 +18,13 @@ class CustomUserAdmin(admin.ModelAdmin):
     def user_type(self, obj):
         return obj.user.user_type
     
-    list_display = ['id', 'username', 'first_name', 'last_name', 'email', 'user_type']
+    def is_active(self, obj):
+        if obj.user.is_active == True:
+            return "Verified"
+        else: 
+            return "Disabled"
+    
+    list_display = ['id', 'username', 'first_name', 'last_name', 'email', 'user_type', 'is_active',]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
