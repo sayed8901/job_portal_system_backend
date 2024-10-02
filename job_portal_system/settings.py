@@ -119,6 +119,7 @@ MIDDLEWARE = [
 # To trust and allow CSRF token on deployment, adding our domain to CSRF_TRUSTED_ORIGINS list
 CSRF_TRUSTED_ORIGINS = [
     'https://job-portal-system-backend.onrender.com',
+    'https://job-portal-system-backend.vercel.app/',
     'http://127.0.0.1:8000',
     'http://localhost:8000',
 ]
