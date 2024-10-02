@@ -49,6 +49,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
+    # whitenoise app
+    "whitenoise.runserver_nostatic",
+
+    # pre
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -104,6 +108,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
+    # whitenoise middleware
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -143,19 +150,43 @@ TEMPLATES = [
 
 SITE_ID = 1
 
+# default WSGI_APPLICATION setting
+# WSGI_APPLICATION = 'job_portal_system.wsgi.application'
 
-WSGI_APPLICATION = 'job_portal_system.wsgi.application'
+# WSGI_APPLICATION setting modified for vercel deploy   
+WSGI_APPLICATION = 'job_portal_system.wsgi.app'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+# # default sqlite3 database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+
+
+# postgreSQL database for superbase & vercel deploy purpose
+# credentials accessed from .env file
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_PORT"),
     }
 }
+
+
+
 
 
 # Password validation
@@ -193,6 +224,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# setting STATIC_ROOT
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # defining media path
 STATIC_URL = 'media/'

@@ -14,3 +14,6 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'job_portal_system.settings')
 
 application = get_wsgi_application()
+
+# optimization for vercel deployment issue
+app = application
