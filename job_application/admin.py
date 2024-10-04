@@ -18,7 +18,17 @@ class JobApplicationAdmin(admin.ModelAdmin):
     def deadline(self, obj):
         return obj.job_post.deadline
     
-    list_display = ['id', 'first_name', 'last_name', 'position', 'employer', 'applied_on', 'deadline', 'salary', 'resume']
+    list_display = [
+        'id', 
+        'first_name', 
+        'last_name', 
+        'position', 
+        'employer', 
+        'applied_on', 
+        'deadline', 
+        'salary', 
+        # 'resume'      # temporarily disabled for vercel deployment purpose
+    ]
 
 
 admin.site.register(JobApplication, JobApplicationAdmin)

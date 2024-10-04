@@ -13,10 +13,11 @@ class JobApplication(models.Model):
 
     job_post = models.ForeignKey(JobPost, on_delete=models.CASCADE, related_name='advertisement')
 
-    resume = models.FileField(upload_to='job_application/media/applications/', validators=[
-        validators.FileExtensionValidator(allowed_extensions=['doc', 'docx', 'pdf'], 
-        message='File type must be in pdf, doc or docx format.')
-    ])
+    # temporarily disabled for vercel deployment purpose
+    # resume = models.FileField(upload_to='job_application/media/applications/', validators=[
+    #     validators.FileExtensionValidator(allowed_extensions=['doc', 'docx', 'pdf'], 
+    #     message='File type must be in pdf, doc or docx format.')
+    # ])
 
     salary = models.IntegerField()
 
