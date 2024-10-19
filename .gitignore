@@ -1,6 +1,6 @@
 .venv
 
-job_portal_env
+job_portal_venv
 
 job_portal_system/.env
 
