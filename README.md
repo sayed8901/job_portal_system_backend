@@ -27,8 +27,6 @@ Additionally, the use of **PostgreSQL** ensures reliable data handling and scala
 
 ## Project Features
 
-## Features
-
 ### User Authentication
 
 - User roles: Employers and Job Seekers.
