@@ -100,34 +100,29 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    'django.middleware.common.CommonMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 
+    # for session middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
+    # for CSRF middleware
     'django.middleware.security.SecurityMiddleware',
-    # whitenoise middleware
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # whitenoise middleware (for vercel deployment only)
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 
-# To trust and allow CSRF token on deployment, adding our domain to CSRF_TRUSTED_ORIGINS list
+# To trust and allow CSRF token on deployment, adding our frontend domain to CSRF_TRUSTED_ORIGINS list
 CSRF_TRUSTED_ORIGINS = [
-    'https://job-portal-system-backend.onrender.com',
-    'https://job-portal-system-backend.vercel.app/',
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
+    'https://bd-job-portal.netlify.app',    # deployed frontend 
+    'http://localhost:5173',                # frontend's localhost
 ]
-
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:3000",
-    "http://localhost:8000",
-)
 
 
 
@@ -151,11 +146,16 @@ TEMPLATES = [
 
 SITE_ID = 1
 
+
+
 # default WSGI_APPLICATION setting
 # WSGI_APPLICATION = 'job_portal_system.wsgi.application'
 
 # WSGI_APPLICATION setting modified for vercel deploy   
 WSGI_APPLICATION = 'job_portal_system.wsgi.app'
+
+
+
 
 
 # Database
@@ -241,23 +241,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# for using customUser in AbstractUser 
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
-}
-
-
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env("EMAIL")
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
-
-
-
-
-
-
