@@ -38,7 +38,7 @@ Additionally, the use of **PostgreSQL** ensures reliable data handling and scala
 ### Job Listings
 
 - Employers can create job listings by providing details such as job title, description, requirements, and location.
-- Job listings should display key information, such as the job title, company name, and date posted.
+- Job listings contain key information, such as the job title, company name, and date posted.
 
 ### Job Details
 
@@ -57,10 +57,6 @@ Additionally, the use of **PostgreSQL** ensures reliable data handling and scala
 ### Email Notifications
 
 - Send email notifications to users when they successfully apply for a job or when an employer receives a new application.
-
-### Deployment and Submission
-
-- Deploy the functional website on a reliable hosting platform.
 
 ---
 
