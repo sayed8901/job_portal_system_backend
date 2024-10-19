@@ -1,12 +1,12 @@
-# Job Portal Project Backend
+# BD Job Portal Project Backend
 
 ## Project Description
 
-**Project Name**: Job Portal Project
+**Project Name**: BD Job Portal Project
 
 ## Overview
 
-The **Job Portal Project** Backend provides a robust platform for managing job listings and applications. Built with **Django** and **Django REST Framework**, it allows for seamless interaction between `employer` (Employer) and `job seeker` (Job seeker).
+The **BD Job Portal** Project Backend provides a robust platform for managing job listings and applications. Built with **Django** and **Django REST Framework**, it allows for seamless interaction between `employer` (Employer) and `job seeker` (Job seeker).
 
 Employers can create and manage job postings, while job seekers can browse, apply, and track their applications. The project also includes features like role-based access control, email notifications, and user dashboards, making it a comprehensive solution for **job portal management**.
 
