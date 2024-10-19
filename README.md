@@ -19,7 +19,7 @@ Additionally, the use of **PostgreSQL** ensures reliable data handling and scala
 ## Technology Stack
 
 - **Backend Framework**: Django, Django REST Framework
-- **Database**: PostgreSQL (with superbase deployment)
+- **Database**: PostgreSQL (with supabase deployment)
 
 ---
 
@@ -100,95 +100,82 @@ whitenoise==6.7.0
 
 1. Open `command prompt` in the folder directory where you want to create & run the project locally
 
-2. **Create a virtual environment**
+2. Copy the `repository_url` to **Clone the repository**
+
+   ```bash
+   git clone https://github.com/sayed8901/job_portal_system_backend.git
+   cd job_portal_system_backend
+   ```
+
+3. **Create a virtual environment**
 
    ```bash
    python -m venv job_portal_env
    cd job_portal_env
    Scripts\activate.bat
+   cd ..
    ```
 
-3. **Temporarily **Create a new project** named `job_portal_system` to get the `SECRET_KEY`**
+4. **Install dependencies**
 
    ```bash
-   django-admin startproject job_portal_system
-   ```
-
-   <br>
-
-4. **After creating a project named `job_portal_system`,**
-
-- Manually go to the project directory folder like: `...\job_portal_env\job_portal_system\job_portal_system` to get the settings.py file.
-- Rename that `settings.py` file to `temp_settings.py`
-- Copy that `temp_settings.py` file and paste it to a temporary folder directory or in the root `job_portal_env` directory
-
-5. **Delete the project** created temporarily
-
-- Go back to the root `job_portal_env` directory
-- Manually delete the temporarily created `job_portal_system` project directory
-
-<br>
-
-6. Copy the `repository_url` to **Clone the repository**
-
-   ```bash
-   git clone https://github.com/sayed8901/job_portal_system_backend.git
-   ```
-
-7. **Install dependencies**
-
-   ```bash
-   cd job_portal_system_backend
    pip install -r requirements.txt
    code .
    ```
 
 <br>
 
-8. **Environment Variables Configuration**
+5. **Environment Variables Configuration**
 
-- To run the application, you need to configure environment variables. Create a file named `.env` inside the root project directory of your project named `HRCorp`.
+- `N.B.`: To run the application, you need to configure environment variables. Create a file named `.env` inside the root project directory of your project named `job_portal_system`.
 
-9. **Then, add the `SECRET_KEY` in that `.env` file:**
+<br>
 
-- Copy the secret key from the previously created temp_settings.py file
-- for example --> `SECRET_KEY=django-insecure--se33_ik1yp+a%bz7a.....`
+6. **Then, add the `SECRET_KEY` in that `.env` file:**
 
-10. **Add the email sending accessibility credentials** in `.env` file:
+- SECRET_KEY=(Your SECRET_KEY)
+
+      --> N.B.: please see the `### Note for: Getting the SECRET_KEY` part for better understanding
+
+- Copy the `secret key` from the temporarily created project's `temp_settings.py` file
+
+<br>
+
+7. **Add the supabase postgreeSQL database credentials** in `.env` file:
+
+- DB_NAME=(Your database name)
+- DB_USER=(Your database username)
+- DB_PASSWORD=(Your database password)
+- DB_HOST=(The host for your database)
+- DB_PORT=(The port for your database)
+
+      --> N.B.: please see the `### Note for: Database Setup` part for better understanding
+
+<br>
+
+8. **Also, Add the email sending accessibility credentials** in `.env` file:
 
 - EMAIL: (Your email address for sending emails)
 - EMAIL_PASSWORD: (Your email password or an app-specific password)
 
-      - N.B.: please see the `### Note for: Email Setup` part for better understanding
+      --> N.B.: please see the `### Note for: Email Setup` part for better understanding
 
 <br>
 
-11. **Also, Add the superbase postgreeSQL database credentials** in `.env` file:
-
-- DB_NAME: (Your database name)
-- DB_USER: (Your database username)
-- DB_PASSWORD: (Your database password)
-- DB_HOST: (The host for your database)
-- DB_PORT: (The port for your database)
-
-        - N.B.: please see the `### Note for: Database Setup` part for better understanding
-
-<br>
-
-12. **Apply migrations**
+9. **Apply migrations**
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-13. **Creating superuser**
+10. **Creating superuser**
 
 ```bash
 python manage.py createsuperuser
 ```
 
-14. **Run the development server**
+11. **Run the development server**
 
 ```bash
 python manage.py runserver
@@ -196,7 +183,7 @@ python manage.py runserver
 
 <br>
 
-15. **Finally, Access the application**
+12. **Finally, Access the application**
 
 - Local: http://127.0.0.1:8000/
 - Admin Panel: http://127.0.0.1:8000/admin/
@@ -205,11 +192,36 @@ python manage.py runserver
 
 <br>
 
-## Note for: Database Setup
+## 13. Note for: Getting the `SECRET_KEY`
 
-1. **Setting up in Superbase:**
+1. **to get the `SECRET_KEY`, Temporarily `Create a new project` named `temp_job_portal_system` anywhere `outside the current project directory` (may be in the `desktop`, `documents` or `downloads`, wherever you want, just outside the current project directory)**
 
-- Go to `superbase.com` and log in with your `GitHub` account.
+   ```bash
+   django-admin startproject temp_job_portal_system
+   ```
+
+   <br>
+
+2. **After creating a project named `temp_job_portal_system`,**
+
+- Manually go to that `temp_job_portal_system` project directory folder to get the `settings.py` file.
+- Rename that `settings.py` file to `temp_settings.py`
+- Copy that `temp_settings.py` file and paste it to a temporary directory like `desktop` or `documents` folder.
+
+3. **Delete the project** named `temp_job_portal_system`
+
+- As we have already copied the `temp_settings.py` file from the `temp_job_portal_system` project, now we can delete it.
+- So now, Manually delete the `temp_job_portal_system` project directory
+
+---
+
+<br>
+
+## 14. Note for: Database Setup
+
+1. **Setting up in supabase:**
+
+- Go to `supabase.com` and log in with your `GitHub` account.
 - Navigate to the dashboard and click on **New project**.
   - Select your organization (e.g., `sayed8901’s Org`).
   - Provide a relevant project name (e.g., `hr_corp-db`).
@@ -235,7 +247,7 @@ DATABASES = {
 
 3. **Update the .env file:**
 
-- In your .env file, replace/update the values for `DB_NAME`, `DB_USER`, `DB_HOST`, and `DB_PORT` based on your Superbase database configuration.
+- In your .env file, replace/update the values for `DB_NAME`, `DB_USER`, `DB_HOST`, and `DB_PORT` based on your supabase database configuration.
 - You should also set `DB_PASSWORD` with the password you generated earlier.
 
 ```python
@@ -246,9 +258,9 @@ DB_HOST=your_db_host
 DB_PORT=your_db_port
 ```
 
-**To find the required database connection details in Superbase:**
+**To find the required database connection details in supabase:**
 
-- Go to the `Superbase dashboard` and select your project.
+- Go to the `supabase dashboard` and select your project.
 - Choose the `database` option from the left sidebar.
 - Alternatively, you can select the `connect` button from the top-right corner.
 - Select the `Python` tab from the `Connection string`
@@ -258,7 +270,7 @@ DB_PORT=your_db_port
 
 <br>
 
-## Note for: Email Setup
+## 15. Note for: Email Setup
 
 To set up email notifications for your Django application, follow these steps:
 

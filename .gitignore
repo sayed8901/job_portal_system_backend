@@ -1,9 +1,9 @@
 .venv
 
-job_portal_system/.env
+job_portal_env
 
+job_portal_system/.env
 
 db.sqlite3
 
 __pycache__/
-
