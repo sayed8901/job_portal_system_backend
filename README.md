@@ -307,15 +307,15 @@ To unlock and access the full functionality of this site and to perform some rol
 
 ### Create an Account
 
-- To register as an **Employer**: Visit `/employer/register`.
-- To register as a **Job Seeker**: Visit `/job_seeker/register`.
+- To register as an **Employer**: Visit `/employer/register/`.
+- To register as a **Job Seeker**: Visit `/job_seeker/register/`.
 
 #### Steps to Register:
 
 1. Fill out the registration form with the relevant information and click the **POST** button.
 2. A confirmation link will be automatically sent to your email. Please check your inbox.
 3. Verify your account by clicking on the confirmation link provided in the email.
-4. After verification, return to the project site and navigate to `/accounts/login` to log in with your credentials.
+4. After verification, return to the project site and navigate to `/accounts/login/` to log in with your credentials.
 
 ### Role-Based Activities
 
