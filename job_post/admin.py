@@ -11,7 +11,7 @@ class JobPostAdmin(admin.ModelAdmin):
     def status(self, obj):
         return obj.employment_status
     
-    list_display = ['id', 'job_title', 'company', 'status', 'education', 'experience', 'age', 'vacancy', 'salary', 'job_posted_on', 'deadline']
+    list_display = ['id', 'job_title', 'company', 'status', 'education', 'experience', 'age', 'vacancy', 'salary', 'job_posted_on', 'deadline', 'is_payment_done', 'job_post_type', ]
 
 
 

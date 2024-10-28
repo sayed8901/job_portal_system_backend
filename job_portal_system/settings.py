@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'category',
     'job_post',
     'job_application',
+    'payment',
 
 
     # 3rd party libraries
@@ -241,9 +242,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+# email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env("EMAIL")
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+
+
+
+# SSLCommerz Sandbox Configuration
+SSLCOMMERZ = {
+    'store_id': env("store_ID"),
+    'store_pass': env("store_password"),
+    'issandbox': True  # Set to False for live transactions
+}

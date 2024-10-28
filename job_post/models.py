@@ -14,10 +14,17 @@ class JobPost(models.Model):
 
     job_category = models.ManyToManyField(Category, related_name='job_category')
 
+    job_post_type = models.CharField(max_length=50, default='standard', choices=[
+        ('standard', 'Standard'), ('premium', 'Premium'),('hot_job', 'Hot_Job')
+    ])
+
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='employer')
     
     job_location = models.CharField(max_length=50)
-    employment_status = models.CharField(max_length=20, choices=[('full-time', 'Full-time'), ('part-time', 'Part-time'), ('contractual', 'Contractual'), ('permanent', 'Permanent')])
+
+    employment_status = models.CharField(max_length=20, choices=[
+        ('full-time', 'Full-time'), ('part-time', 'Part-time'), ('contractual', 'Contractual'), ('permanent', 'Permanent')
+    ])
     
     job_context = models.TextField()
     job_responsibilities = models.TextField()
@@ -37,8 +44,11 @@ class JobPost(models.Model):
     application_instructions = models.TextField()
 
 
+    # for payment status
+    is_payment_done = models.BooleanField(default=False)  
+
+
 
     def __str__(self):
         return f'{self.job_title} at: {self.employer.company_name}'
     
-
