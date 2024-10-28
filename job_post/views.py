@@ -7,6 +7,7 @@ from job_post.serializers import JobPostSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import HttpResponseRedirect
 from rest_framework import status
 from django.http import Http404
 
@@ -335,6 +336,7 @@ class PaymentSuccessView(APIView):
 
         if tran_id and val_id:
             job_post_id = int(tran_id.split('_')[1])
+            # print('Job_post_id after payment success:', job_post_id)
 
             try:
                 job_post = JobPost.objects.get(pk = job_post_id)
@@ -367,7 +369,13 @@ class PaymentSuccessView(APIView):
                 )
 
 
-                return Response({"message": "Payment completed successfully"})
+                # return Response({"message": "Payment completed successfully"})
+
+                # redirect_url = f'http://localhost:5173/payment/success/{job_post_id}'
+                redirect_url = f'https://bd-job-portal.netlify.app/payment/success/{job_post_id}'
+                print('url to redirect after payment success:', redirect_url)
+
+                return HttpResponseRedirect(redirect_url)
             
             except JobPost.DoesNotExist:
                 return Response({"error": "Job post not found"}, status = status.HTTP_404_NOT_FOUND)
@@ -380,7 +388,13 @@ class PaymentSuccessView(APIView):
 # for payment failures
 class PaymentFailView(APIView):
     def post(self, request):
-        return Response({"message": "Payment failed, please try again."}, status=status.HTTP_400_BAD_REQUEST)
+        # return Response({"message": "Payment failed, please try again."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # redirect_url = f'http://localhost:5173/my_jobs'
+        redirect_url = f'https://bd-job-portal.netlify.app/my_jobs'
+        print('url to redirect if payment fail:', redirect_url)
+
+        return HttpResponseRedirect(redirect_url)
 
 
 
@@ -388,7 +402,13 @@ class PaymentFailView(APIView):
 # for cancel payment
 class PaymentCancelView(APIView):
     def post(self, request):
-        return Response({"message": "Payment canceled by user."}, status=status.HTTP_200_OK)
+        # return Response({"message": "Payment canceled by user."}, status=status.HTTP_200_OK)
+
+        # redirect_url = f'http://localhost:5173/my_jobs'
+        redirect_url = f'https://bd-job-portal.netlify.app/my_jobs'
+        print('url to redirect if payment canceled:', redirect_url)
+
+        return HttpResponseRedirect(redirect_url)
 
 
 
