@@ -29,24 +29,41 @@ Additionally, the use of **PostgreSQL** ensures reliable data handling and scala
 
 ### User Authentication
 
-- User roles: Employers and Job Seekers.
-- Users can register for an account and log in.
-- Users can log out.
+- User roles: `Employers` and `Job Seekers`.
+- Users can `register` for an account and `log in`.
+- Users can `log out`.
 
-### Job Listings
+### Employers Activity
 
-- Employers can create job listings by providing details such as job title, description, requirements, and location.
-- Job listings contain key information, such as the job title, company name, and date posted.
+#### Job Listings
+
+- Employers can create new job listings by providing the necessary details, such as job title, description, requirements, and location.
+- Job listings (short job view) display key information, such as the job title, company name, and date posted.
+- Job listings can be viewed by all users, even those who are not logged in.
 
 ### Job Details
 
 - Users can view detailed information about a job listing, including the job description, requirements, and application instructions.
 - Job seekers can apply to a job by uploading their resume and providing other information (such as salary expectations).
 
+### Job Seeker Applicants Activity
+
+- Job seekers can create profiles with relevant information.
+- Job seekers can view the details of a job listing before applying.
+- Job seekers can update their resumes.
+
 ### User Dashboard
 
-- Employers have a dashboard to manage their posted job listings, view applications, and update job details.
+#### Employer Dashboard
+
+- Employers have a dashboard to manage their posted job listings and view applications.
+- Employers can edit and update the job details of their job listings.
+- Employers can delete their job listings.
+
+#### Job Seeker Dashboard
+
 - Job seekers have a dashboard to track their applications.
+- Job seekers can withdraw their applications.
 
 ### Job Categories
 
@@ -55,6 +72,11 @@ Additionally, the use of **PostgreSQL** ensures reliable data handling and scala
 ### Email Notifications
 
 - Send email notifications to users when they successfully apply for a job or when an employer receives a new application.
+
+### Payment Integration (using SSLCommerz)
+
+- Employers can make payments for their posted job circulars.
+- After successful payment, employers can view the payment details.
 
 ---
 
@@ -153,12 +175,21 @@ whitenoise==6.7.0
 
 <br>
 
-8. **Also, Add the email sending accessibility credentials** in `.env` file:
+8. **Add the email sending accessibility credentials** in `.env` file:
 
 - EMAIL: (Your email address for sending emails)
 - EMAIL_PASSWORD: (Your email password or an app-specific password)
 
       --> N.B.: please see the `### Note for: Email Setup` part for better understanding
+
+<br>
+
+8. **Also, Add the Sandbox Credentials for SSLCommerz Payment Gateway Methods Integration** in `.env` file:
+
+- store_ID: (Your sandbox merchant account's store_id)
+- store_password: (Your sandbox merchant account's store_password)
+
+      --> N.B.: please see the `### Note for: Payment Gateway Method Integration using SSLCommerz Setup` part for better understanding
 
 <br>
 
@@ -301,6 +332,30 @@ To set up email notifications for your Django application, follow these steps:
 
 <br>
 
+## 16. Extra Note for: Payment Gateway Method Integration using SSLCommerz Setup
+
+**Payment Gateway Integration** (using SSLCommerz & sandbox account)
+
+- To integrate Payment Gateway Method Integration using `SSLCommerz`, we need to create and use `Sandbox Account`.
+
+1. **Create Sandbox Account**:
+
+   - Go to [SSLCommerz Developer](https://developer.sslcommerz.com/) → click “sandbox account” → [Create Sandbox Account](https://developer.sslcommerz.com/registration/).
+   - Fill in the required details, including domain name (e.g., `http://127.0.0.1:8000/`), company info, valid email address, password and some other personal details.
+   - Confirm registration via the email `verification` code.
+   - Once verified, you will get an additional mail containing some important information including **`Store ID`** & **`Store Password`**. note it down.
+
+2. **saving Sandbox Credentials** in `.env` file
+
+- You need to store the Sandbox Credentials for SSLCommerz Payment Gateway Methods Integration in the `.env` file you created earlier in your main project directory. You need to store the following:
+
+  - `store_ID`: (Your sandbox merchant account's store_id)
+  - `store_password`: (Your sandbox merchant account's store_password)
+
+---
+
+<br>
+
 ## Getting Started
 
 To unlock and access the full functionality of this site and to perform some role-specific activities, you will need to create an account first. Follow the instructions below to get started.
@@ -395,7 +450,11 @@ Once logged in, you can perform activities specific to your role. For a full lis
 
 - **List All Job Posts**:  
   `GET` - `/job_posts/all/`  
-  Returns a list of all job posts.
+  Returns a list of all the posted job_posts.
+
+- **List All Job Posts**:  
+  `GET` - `/job_posts/all_paid/`  
+  Returns a list of all the payment completed job_posts
 
 - **Retrieve/Update/Delete Specific Job Post**:  
   `GET` `PUT` `DELETE` - `/job_posts/all/<id>/`  
@@ -438,6 +497,36 @@ Once logged in, you can perform activities specific to your role. For a full lis
 - **List of Applications for a single Job Post**:  
   `GET` - `/job_applications/applications_for_a_job_post/?job_post_id=<id>&employer_id=<id>`  
   Returns a list of applications for a specific job post (only accessible to the employer who posted it).
+
+### Payment Related Endpoints
+
+- **Initiate Payment**:  
+  `POST` - `/job_posts/payment/initiate/?job_post_id=<id>`  
+  Initiates the payment process and provides the SSLCommerz Payment Interface.
+
+- **Payment Success**:  
+  `POST` - `/job_posts/payment/success/`  
+  Endpoint to handle payment success.
+
+- **Payment Failure**:  
+  `POST` - `/job_posts/payment/fail/`  
+  Endpoint to handle payment failure.
+
+- **Cancel Payment**:  
+  `POST` - `/job_posts/payment/cancel/`  
+  Endpoint to cancel a payment.
+
+- **Get All Payments**:  
+  `GET` - `/payment/all/`  
+  Retrieves all the payment data.
+
+- **Get Payment by ID**:  
+  `GET` `DELETE` - `/payment/all/<payment_id>/`  
+  Retrieves or deletes a single payment info by a payment ID.
+
+- **Get Payments by Job Post ID**:  
+  `GET` - `/payment/by_job_post_id/?job_post_id=<id>`  
+  Retrieves payment info by a job_post_ID.
 
 ---
 

@@ -257,7 +257,9 @@ class InitiatePaymentView(APIView):
             'currency': "BDT",
             'tran_id': f"jobPost_{job_post.pk}",
 
-            # these urls will be fetched from the url_patters file
+            # Generate absolute URLs for redirection after payment:
+            # - `reverse(...)` gets the relative path for each view.
+            # - `build_absolute_uri(...)` converts the relative path to an absolute URL based on the request's host and protocol.
             'success_url': self.request.build_absolute_uri(reverse('payment_success')),
             'fail_url': self.request.build_absolute_uri(reverse('payment_fail')),
             'cancel_url': self.request.build_absolute_uri(reverse('payment_cancel')),
