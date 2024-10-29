@@ -109,6 +109,7 @@ Markdown==3.7
 psycopg2-binary==2.9.9
 requests==2.32.3
 sqlparse==0.5.1
+sslcommerz-lib==1.0
 tzdata==2024.2
 urllib3==2.2.3
 whitenoise==6.7.0
@@ -177,36 +178,36 @@ whitenoise==6.7.0
 
 8. **Add the email sending accessibility credentials** in `.env` file:
 
-- EMAIL: (Your email address for sending emails)
-- EMAIL_PASSWORD: (Your email password or an app-specific password)
+- EMAIL=(Your email address for sending emails)
+- EMAIL_PASSWORD=(Your email password or an app-specific password)
 
       --> N.B.: please see the `### Note for: Email Setup` part for better understanding
 
 <br>
 
-8. **Also, Add the Sandbox Credentials for SSLCommerz Payment Gateway Methods Integration** in `.env` file:
+9. **Also, Add the Sandbox Credentials for SSLCommerz Payment Gateway Methods Integration** in `.env` file:
 
-- store_ID: (Your sandbox merchant account's store_id)
-- store_password: (Your sandbox merchant account's store_password)
+- store_ID=(Your sandbox merchant account's store_id)
+- store_password=(Your sandbox merchant account's store_password)
 
       --> N.B.: please see the `### Note for: Payment Gateway Method Integration using SSLCommerz Setup` part for better understanding
 
 <br>
 
-9. **Apply migrations**
+10. **Apply migrations**
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-10. **Creating superuser**
+11. **Creating superuser**
 
 ```bash
 python manage.py createsuperuser
 ```
 
-11. **Run the development server**
+12. **Run the development server**
 
 ```bash
 python manage.py runserver
@@ -214,7 +215,7 @@ python manage.py runserver
 
 <br>
 
-12. **Finally, Access the application**
+**Finally, Access the application**
 
 - Local: http://127.0.0.1:8000/
 - Admin Panel: http://127.0.0.1:8000/admin/login/
