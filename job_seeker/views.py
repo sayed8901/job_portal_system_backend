@@ -65,11 +65,11 @@ class JobSeekerRegistrationAPIView(APIView):
             # confirm_link = f'http://127.0.0.1:8000/job_seeker/active/{user_id}/{token}/'
 
             # creating a confirm link (using live onRender domain)
-            # confirm_link = f'https://job-portal-system-backend.onrender.com/job_seeker/active/{user_id}/{token}/'
+            confirm_link = f'https://job-portal-system-backend.onrender.com/job_seeker/active/{user_id}/{token}/'
 
 
             # creating a confirm link (using live vercel domain)
-            confirm_link = f'https://job-portal-system-backend.vercel.app/job_seeker/active/{user_id}/{token}/'
+            # confirm_link = f'https://job-portal-system-backend.vercel.app/job_seeker/active/{user_id}/{token}/'
 
 
 
